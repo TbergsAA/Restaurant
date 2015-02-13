@@ -11,7 +11,8 @@ RSpec.describe Product do
     end
 
     it "add category" do
-      expect(subject.add_category(category)).to include(category)
+      subject.add_category(category)
+      expect(subject.category).to eql(category)
     end
   end
 end
