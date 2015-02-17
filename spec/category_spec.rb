@@ -9,7 +9,7 @@ RSpec.describe Category do
   end
 
   describe "products" do
-    let(:product) { Product.new(name: "Beer") }
+    let(:product) { Product.new("Beer", 200, 1 ) }
 
     it 'empty products list' do
       expect(subject.products).to be_empty

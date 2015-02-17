@@ -1,12 +1,13 @@
 class Category
-attr_accessor :name, :products, :id
+  attr_accessor :name, :products
 
-  def initialize (name, products, id)
+  def initialize (name)
     @name = name
-    @products = products
-    @id = id
+    @products = []
   end
 
-
+  def add_product(product)
+    @products << product
+  end
 
 end

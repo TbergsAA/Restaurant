@@ -1,12 +1,14 @@
 require 'spec_helper'
 RSpec.describe Product do
   let(:name) { "Beer" }
-  subject(:subject) { described_class.new(name) }
+  let(:price) { 200 }
+  let(:id) { 1 }
+  subject(:subject) { described_class.new(name, price, id) }
 
   describe "category" do
-    let(:category) { Category.new(name: "Drinks") }
+    let(:category) { Category.new("Salads") }
 
-    it 'empty products list' do
+    it 'empty category' do
       expect(subject.category).to be_nil
     end
 
