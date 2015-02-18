@@ -36,6 +36,22 @@ RSpec.describe Order do
       it "get full price" do
         expect(subject.total_sum).to eql(54)
       end
+
+      it "sum not change if call repeat calculate_sum" do
+        subject.calculate_sum
+        expect(subject.total_sum).to eql(54)
+      end
+
+      describe "add product after calculate_sum" do
+        before do
+          subject.add_product(product_4)
+          subject.calculate_sum
+        end
+
+        it "calulate new sum" do
+          expect(subject.total_sum).to eql(74)
+        end
+      end
     end
 
     describe "finalize order" do
