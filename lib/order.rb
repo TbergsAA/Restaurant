@@ -12,11 +12,9 @@ class Order
   end 
 
   def calculate_sum
-    sum = 0
-    products.map do |product|
+    @total_sum = products.reduce(0) do |sum, product|
       sum += product.price
     end
-    @total_sum = sum 
   end
 
   def add_product(product)
@@ -28,7 +26,11 @@ class Order
   end
 
   def remove_product(product)
-    @products.delete(product) 
+    if open?
+      @products.delete(product)
+    else
+      "order is finalized"
+    end
   end
 
   def finalize!
