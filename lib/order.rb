@@ -2,19 +2,29 @@ require_relative "product.rb"
 
 class Order
 
-  # attr_reader :products
+  attr_reader :products, :total_sum
   
 
   def initialize
     @products = []
+    @status = :open
+    @total_sum = 0
   end 
 
-  def total_sum
-  
+  def calculate_sum
+    sum = 0
+    products.map do |product|
+      sum += product.price
+    end
+    @total_sum = sum 
   end
 
   def add_product(product)
-    @products << product
+    if open?
+      @products << product
+    else
+      "order is finalized"
+    end
   end
 
   def remove_product(product)
@@ -22,28 +32,14 @@ class Order
   end
 
   def finalize!
-
+    @status = :close  
   end
 
-  def products
+  def finalized?
+    @status == :close
+  end
 
+  def open?
+    @status == :open
   end
 end
-
-  # order = Order.new
-  # order.products
-
-  # product = Product.new("Užavas", 200, 1)
-  # order.add_product(product)
-
-
-
-# new_product = Product.new("alus", 200, 1)
-
-# new_order = Order.new()
-
-# new_order.add_product(new_product)
-
-# puts new_order.remove_product(new_product)
-
-# puts 
