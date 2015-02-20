@@ -9,5 +9,4 @@ class Category
   def add_product(product)
     @products << product
   end
-
 end
