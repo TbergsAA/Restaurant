@@ -1,15 +1,18 @@
 require_relative "product.rb"
 require_relative "category.rb"
 require_relative "order.rb"
+require "pry"
 
 class NewOrder
 
-  attr_accessor :categories
+  attr_accessor :categories, :order, :name, :price, :id, :category
 
   def initialize
     self.categories = [] 
     build_menu
     @order = Order.new
+    @status = :open
+    @total_sum = 0
   end
 
   def select_product
@@ -18,19 +21,42 @@ class NewOrder
     puts "You selected: #{input}"
   end
 
-  def print_menu 
+  def print_menu
     puts "++++++++++MENU LIST++++++++++" 
     categories.each do |c|
       puts c.name
       print_products_menu(c)
     end
     puts "+++++++++++++++++++++++++++++"
+    puts "Enter your products!"
   end
 
   def print_products_menu(category)
     puts "-----------------------------"
     category.products.each do |product|
-      puts "#{product.name}: #{product.price}"
+      puts product.name
+    end
+  end
+
+  def show_order
+    puts "         YOUR ORDER           "
+    puts "------------------------------"
+    order.products.each do |p|
+      puts p
+    end
+  end
+
+  def finalize!
+    puts "Would you like to finalize order? (y/n)"
+    input = gets.chomp
+    if input == 'y'
+      @status = :close
+      order.products.each do |p|
+        puts "Total sum: #{p.price}"
+        puts "Order is finalized!"  
+      end
+    else
+      print_menu
     end
   end
 
@@ -84,4 +110,13 @@ new_order = NewOrder.new
 new_order.print_menu
 
 new_order.select_product
+new_order.select_product
+new_order.show_order
+new_order.finalize!
+new_order.select_product
+new_order.select_product
+new_order.show_order
+new_order.finalize!
 
+
+ 

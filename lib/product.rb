@@ -14,7 +14,7 @@ class Product
     @name = name
   end
 
-  def product_prise
+  def product_price
     @price = price
   end
 
