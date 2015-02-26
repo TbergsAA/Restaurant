@@ -20,16 +20,15 @@ class Order
   def add_product(product)
     if open?
       @products << product
-    else
-      "order is finalized"
     end
   end
 
   def remove_product(product)
     if open?
       @products.delete(product)
+      puts "Product is removed!"
     else
-      "order is finalized"
+      "Order is finalized!"
     end
   end
 

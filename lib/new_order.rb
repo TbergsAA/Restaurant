@@ -17,26 +17,57 @@ class NewOrder
 
   def find_product(id)
     selected_product = nil
-      categories.each do |category|
-          category.name
-        category.products.each do |product|
-            product.name
-          if product.id.to_s == id.to_s
-            selected_product = product
-            return selected_product
-          end
+    categories.each do |category|
+      category.name
+      category.products.each do |product|
+        product.name
+        if product.id.to_s == id.to_s
+          selected_product = product
+          return selected_product
         end
+      end
+    end
+  end
+
+  def find_product_in_order(id)
+    selected_product = nil
+    order.products.each do |product|
+      product.name
+      if product.id.to_s == id.to_s
+        return product
+      end
     end
   end
 
   def select_product
     input = gets.chomp
-    return finalize! if input == 'f'
-    product = find_product(input)
-    order.add_product(product)
-    puts "You selected: #{product}"
-    puts "If you want finalize order press > f <"
-    select_product
+    if input == 'f'
+      return finalize!
+    elsif input == 'r'
+      show_order
+      puts "Select wich product you want remove!"
+      input = gets.chomp
+      remove_product(input)
+      show_order
+      puts "If you want finalize order press > f <"
+      puts "If you want remove product press > r <"
+      puts "Or select product!"
+      select_product
+      
+    else
+      product = find_product(input)
+      order.add_product(product)
+      puts "You selected: #{product.name}"
+      puts "If you want finalize order press > f <"
+      puts "If you want remove product press > r <"   
+      select_product
+    end
+  end
+
+  def finalize!
+    @status = :close
+    puts "Order is finalized!"
+    show_order 
   end
 
 
@@ -61,16 +92,15 @@ class NewOrder
     puts "         YOUR ORDER           "
     puts "------------------------------"
     order.products.each do |product|
-      puts product.name
+      puts "#{product.id}) #{product.name}"
     end
     puts "------------------------------"
     puts "Total sum: #{order.calculate_sum / 100} EUR"
   end
 
-  def finalize!
-    @status = :close
-    puts "Order is finalized!"
-    show_order 
+  def remove_product(id)
+    product = find_product_in_order(id)
+    order.remove_product(product)
   end
 
   def build_menu
@@ -123,5 +153,6 @@ new_order = NewOrder.new
 new_order.print_menu
 
 new_order.select_product
+
 
  
